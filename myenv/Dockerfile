@@ -2,7 +2,7 @@ FROM python:3.8
 
 WORKDIR /app
 
-COPY myenv /app
+COPY E:\PyPro_Fr_Tr\myenv /app
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
