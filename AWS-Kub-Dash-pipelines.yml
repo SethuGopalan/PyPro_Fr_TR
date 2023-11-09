@@ -53,8 +53,7 @@ stages:
         command: 'plan'
         workingDirectory: '$(System.DefaultWorkingDirectory)/myenv'
         environmentServiceNameAWS: 'Aws-Terraform-Eks-Connect'
-        env:
-          TF_LOG: 'DEBUG'
+        
 
     - task: TerraformTaskV4@4
       inputs:
