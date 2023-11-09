@@ -45,16 +45,19 @@ stages:
     - task: TerraformTaskV4@4
       inputs:
         provider: 'aws'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/myenv'
         command: 'validate'
     - task: TerraformTaskV4@4
       inputs:
         provider: 'aws'
         command: 'plan'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/myenv'
         environmentServiceNameAWS: 'Aws-Terraform-Eks-Connect'
     - task: TerraformTaskV4@4
       inputs:
         provider: 'aws'
         command: 'apply'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/myenv'
         environmentServiceNameAWS: 'Aws-Terraform-Eks-Connect'
 
 
