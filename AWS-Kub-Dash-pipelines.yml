@@ -30,10 +30,10 @@ stages:
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
         tags: '$(tag)'
-    - task: TerraformInstaller@2
+    - task: TerraformCLI@2
       inputs:
-          terraformVersion: 'latest'
-          downloadUrl: 'https://releases.hashicorp.com/terraform/1.6.3/terraform_1.6.3_linux_amd64.zip'
+        command: 'version'
+        allowTelemetryCollection: true
     - task: TerraformTaskV4@4
       inputs:
         provider: 'aws'
