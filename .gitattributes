@@ -1,0 +1,2 @@
+*.terraform-provider-aws_v4.67.0_x5.exe filter=lfs diff=lfs merge=lfs -text
+terraform-provider-aws_v4.67.0_x5.exe filter=lfs diff=lfs merge=lfs -text
