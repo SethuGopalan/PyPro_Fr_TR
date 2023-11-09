@@ -34,6 +34,7 @@ stages:
       inputs:
         provider: 'aws'
         command: 'init'
+        workingDirectory: '$(System.DefaultWorkingDirectory/myenv'
         backendServiceAWS: 'Aws-Terraform-Eks-Connect'
         backendAWSBucketName: 'octopusmsiinstaller'
         backendAWSKey: 'Kub-dashApp-dev.tfstate'
