@@ -1,7 +1,7 @@
 provider "aws" {
 
-  profile = "terrafom"
-  region  = "us-east-1"
+  #   profile = "terrafom"
+  region = "us-east-1"
 
 }
 
