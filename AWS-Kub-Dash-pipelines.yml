@@ -37,5 +37,19 @@ stages:
         backendServiceAWS: 'Aws-Terraform-Eks-Connect'
         backendAWSBucketName: 'octopusmsiinstaller'
         backendAWSKey: 'Kub-dashApp-dev.tfstate'
+    - task: TerraformTaskV4@4
+      inputs:
+        provider: 'aws'
+        command: 'validate'
+    - task: TerraformTaskV4@4
+      inputs:
+        provider: 'aws'
+        command: 'plan'
+        environmentServiceNameAWS: 'Aws-Terraform-Eks-Connect'
+    - task: TerraformTaskV4@4
+      inputs:
+        provider: 'aws'
+        command: 'apply'
+        environmentServiceNameAWS: 'Aws-Terraform-Eks-Connect'
 
 
