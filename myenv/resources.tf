@@ -8,7 +8,7 @@ resource "aws_eks_cluster" "my-eks-dashapp-cluster" {
     subnet_ids         = [data.aws_subnets.default_subnets.id]
   }
 
-  depends_on = [data.aws_iam_role_policy_attachment.eks_dashapp_policy]
+  # depends_on = [data.aws_iam_role_policy_attachment.eks_dashapp_policy]
 }
 # resource "aws_subnets" "default_subnets" {
 
