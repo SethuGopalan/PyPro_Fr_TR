@@ -5,22 +5,22 @@ resource "aws_eks_cluster" "my-eks-dashapp-cluster" {
 
   vpc_config {
     security_group_ids = [data.aws_security_group.Eks_dashapp_dock_sg.id]
-    subnet_ids         = [aws_subnets.default_subnets.id]
+    subnet_ids         = [data.aws_subnets.default_subnets.id]
   }
 
 
 }
-resource "aws_subnets" "default_subnets" {
+# resource "aws_subnets" "default_subnets" {
 
-  filter {
+#   filter {
 
-    #   vpc_id = aws_default_vpc.default.id
-    name = "vpc-id"
+#     #   vpc_id = aws_default_vpc.default.id
+#     name = "vpc-id"
 
-    values = [aws_default_vpc.default.id]
-  }
+#     values = [aws_default_vpc.default.id]
+#   }
 
-}
+# }
 
 # resource "aws_iam_role_policy_attachment" "eks_dashapp_policy" {
 #   role       = data.aws_iam_role.eks_dashapp_role.arn

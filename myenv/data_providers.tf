@@ -22,14 +22,14 @@ data "aws_security_group" "Eks_dashapp_dock_sg" {
 # # }
 
 
-# data "aws_subnets" "default_subnets" {
+data "aws_subnets" "default_subnets" {
 
-#   filter {
+  filter {
 
-#     #   vpc_id = aws_default_vpc.default.id
-#     name = "vpc-id"
+    #   vpc_id = aws_default_vpc.default.id
+    name = "vpc-id"
 
-#     values = [aws_default_vpc.default.id]
-#   }
+    values = [aws_default_vpc.default.id]
+  }
 
-# }
+}
