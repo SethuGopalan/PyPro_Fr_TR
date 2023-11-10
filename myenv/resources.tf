@@ -4,7 +4,7 @@ resource "aws_eks_cluster" "my-eks-dashapp-cluster" {
   role_arn = data.aws_iam_role.eks_dashapp_role.arn
 
   vpc_config {
-    security_group_ids = [data.aws_security_group.Eks_dashapp_dock_sg.id]
+    security_group_ids = [aws_security_group.Eks_dashapp_dock_sg.id]
     subnet_ids         = [data.aws_subnets.default_subnets.id]
   }
 
@@ -15,33 +15,33 @@ resource "aws_iam_role_policy_attachment" "eks_dashapp_policy" {
   role       = data.aws_iam_role.eks_dashapp_role.arn
   policy_arn = data.aws_iam_policy.AmazonEKSClusterFullAccess.arn
 }
-resource "aws_security_group_rule" "ingress_http" {
+# resource "aws_security_group_rule" "ingress_http" {
 
-  type              = "ingress"
-  from_port         = 80
-  to_port           = 80
-  protocol          = "tcp"
-  cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = data.aws_security_group.Eks_dashapp_dock_sg.id
-}
-resource "aws_security_group_rule" "ingress_port" {
+#   type              = "ingress"
+#   from_port         = 80
+#   to_port           = 80
+#   protocol          = "tcp"
+#   cidr_blocks       = ["0.0.0.0/0"]
+#   security_group_id = data.aws_security_group.Eks_dashapp_dock_sg.id
+# }
+# resource "aws_security_group_rule" "ingress_port" {
 
-  type              = "ingress"
-  from_port         = 22
-  to_port           = 22
-  protocol          = "tcp"
-  cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = data.aws_security_group.Eks_dashapp_dock_sg.id
+#   type              = "ingress"
+#   from_port         = 22
+#   to_port           = 22
+#   protocol          = "tcp"
+#   cidr_blocks       = ["0.0.0.0/0"]
+#   security_group_id = data.aws_security_group.Eks_dashapp_dock_sg.id
 
-}
-resource "aws_security_group_rule" "egress_rule" {
-  type              = "egress"
-  from_port         = 0
-  to_port           = 0
-  protocol          = "-1"
-  cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = data.aws_security_group.Eks_dashapp_dock_sg.id
-}
+# }
+# resource "aws_security_group_rule" "egress_rule" {
+#   type              = "egress"
+#   from_port         = 0
+#   to_port           = 0
+#   protocol          = "-1"
+#   cidr_blocks       = ["0.0.0.0/0"]
+#   security_group_id = data.aws_security_group.Eks_dashapp_dock_sg.id
+# }
 
 # resource "aws_iam_role" "eks_dashapp_role" {
 #   name               = "eks_dashapp_role"
