@@ -1,7 +1,7 @@
 resource "aws_eks_cluster" "Eks_Dashapp_cluster" {
   name = "my-eks-dashapp-cluster"
 
-  role_arn = aws_iam_role.eks_dash_role.arn
+  role_arn = aws_iam_role.eks_dashapp_role.arn
 
   vpc_config {
     security_group_ids = [aws_security_group.Eks_dashapp_Dock_sg.id]
@@ -9,8 +9,8 @@ resource "aws_eks_cluster" "Eks_Dashapp_cluster" {
   }
 }
 
-resource "aws_iam_role" "eks_dash_role" {
-  name               = "eks_dash_role"
+resource "aws_iam_role" "eks_dashapp_role" {
+  name               = "eks_dashapp_role"
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -28,7 +28,7 @@ EOF
 }
 
 resource "aws_iam_role_policy_attachment" "eks_dash_policy" {
-  role       = aws_iam_role.eks_dash_role.name
+  role       = aws_iam_role.eks_dashapp_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterFullAccess"
 }
 
