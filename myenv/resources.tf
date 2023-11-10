@@ -8,9 +8,13 @@ resource "aws_eks_cluster" "my-eks-dashapp-cluster" {
     subnet_ids         = [data.aws_subnets.default_subnets.id]
   }
 
-  depends_on = [data.aws_iam_role_policy_attachment.eks_dashapp_policy]
+
 }
 
+resource "aws_iam_role_policy_attachment" "eks_dashapp_policy" {
+  role       = data.aws_iam_role.eks_dashapp_role.arn
+  policy_arn = data.aws_iam_policy.AmazonEKSClusterFullAccess.arn
+}
 
 # resource "aws_iam_role" "eks_dashapp_role" {
 #   name               = "eks_dashapp_role"
