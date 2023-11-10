@@ -61,9 +61,9 @@ stages:
         backendServiceAWS: 'Aws-Terraform-Eks-Connect'
         backendAWSBucketName: 'octopusmsiinstaller'
         backendAWSKey: 'Kub-dashApp-dev.tfstate'
-      # env:
-      #   AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
-      #   AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
+      env:
+        AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
+        AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
     - task: TerraformTaskV4@4
       inputs:
         provider: 'aws'
