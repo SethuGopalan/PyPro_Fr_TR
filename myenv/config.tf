@@ -6,9 +6,9 @@ resource "aws_default_vpc" "default" {
 
 }
 
-resource "aws_security_group" "Eks_dashapp_sg" {
+resource "aws_security_group" "Eks_dashapp_Dock_sg" {
 
-  name = "Eks_dashapp_sg"
+  name = "Eks_dashapp_dock_sg"
 
   vpc_id = aws_default_vpc.default.id
   # where you wnat to allow trafic from
@@ -41,7 +41,7 @@ resource "aws_security_group" "Eks_dashapp_sg" {
   }
 
   tags = {
-    name = "http_server_sg"
+    name = "Eks_dashapp_Dock_sg"
   }
 
 }
