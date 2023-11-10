@@ -1,6 +1,11 @@
 
-data "aws_security_group" "Eks_dashapp_Dock_sg" {
+data "aws_security_group" "Eks_dashapp_dock_sg" {
   name = "Eks_dashapp_dock_sg"
+
+  tags = {
+    name = "Eks_dashapp_dock_sg"
+  }
+
 }
 
 data "aws_iam_role" "eks_dashapp_role" {
