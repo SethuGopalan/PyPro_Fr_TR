@@ -26,6 +26,28 @@ resource "aws_iam_role" "eks_dashapp_role" {
 }
 EOF
 }
+resource "aws_iam_policy" "AmazonEKSClusterFullAccess" {
+  name   = "AmazonEKSClusterFullAccess"
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "eks:*",
+        "ec2:*",
+        "iam:*",
+        "s3:*",
+        "logs:*",
+        "cloudwatch:*"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+EOF
+}
 
 resource "aws_iam_role_policy_attachment" "eks_dash_policy" {
   role       = aws_iam_role.eks_dashapp_role.name
