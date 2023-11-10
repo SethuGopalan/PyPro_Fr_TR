@@ -49,7 +49,7 @@ resource "aws_iam_policy" "AmazonEKSClusterFullAccess" {
 EOF
 }
 
-resource "aws_iam_role_policy_attachment" "eks_dash_policy" {
+resource "aws_iam_role_policy_attachment" "eks_dashapp_policy" {
   role       = aws_iam_role.eks_dashapp_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterFullAccess"
 }
