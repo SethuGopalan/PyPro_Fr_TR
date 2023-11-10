@@ -1,14 +1,14 @@
 resource "aws_eks_cluster" "my-eks-dashapp-cluster" {
   name = "my-eks-dashapp-cluster"
 
-  role_arn = aws_iam_role.eks_dashapp_role.arn
+  role_arn = data.aws_iam_role.eks_dashapp_role.arn
 
   vpc_config {
     security_group_ids = [data.aws_security_group.Eks_dashapp_dock_sg.id]
     subnet_ids         = [data.aws_subnets.default_subnets.id]
   }
 
-
+  depends_on = [data.aws_iam_role_policy_attachment.eks_dashapp_policy]
 }
 # resource "aws_subnets" "default_subnets" {
 
