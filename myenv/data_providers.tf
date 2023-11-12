@@ -33,4 +33,9 @@ data "aws_subnets" "default_subnets" {
     values = [aws_default_vpc.default.id]
   }
 
+  filter {
+    name   = "availability-zone"
+    values = ["us-east-1a", "us-east-2b", "us-east-2c", "us-east-1d"] # Update with valid zones
+  }
+
 }
