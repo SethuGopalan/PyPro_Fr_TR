@@ -5,7 +5,7 @@ resource "aws_eks_cluster" "my-eks-dashapp-cluster" {
 
   vpc_config {
     security_group_ids = [aws_security_group.Eks_dashapp_dock_sg.id]
-    subnet_ids         = [data.aws_subnets.default_subnets.id]
+    subnet_ids         = tolist(data.aws_subnets.default_subnets.ids)
   }
 
   # depends_on = [data.aws_iam_role_policy_attachment.eks_dashapp_policy]
