@@ -24,10 +24,11 @@
 
 data "aws_subnets" "default_subnets" {
 
+  # vpc_id = aws_default_vpc.default.id
   filter {
 
     #   vpc_id = aws_default_vpc.default.id
-    name = "vpc_id"
+    name = "vpc-id"
 
     values = [aws_default_vpc.default.id]
   }
