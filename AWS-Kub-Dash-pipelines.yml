@@ -58,6 +58,7 @@ stages:
         provider: 'aws'
         command: 'destroy'
         workingDirectory: '$(System.DefaultWorkingDirectory)/myenv'
+        environmentServiceNameAWS: 'Aws-Terraform-Eks-Connect'
         backendServiceAWS: 'Aws-Terraform-Eks-Connect'
         backendAWSBucketName: 'octopusmsiinstaller'
         backendAWSKey: 'Kub-dashApp-dev.tfstate'
