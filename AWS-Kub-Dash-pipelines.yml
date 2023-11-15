@@ -58,6 +58,7 @@ stages:
         provider: 'aws'
         command: 'destroy'
         environmentServiceNameAWS: 'Aws-Terraform-Eks-Connect'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/myenv'
     # - task: TerraformTaskV4@4
       # inputs:
       #   provider: 'aws'
