@@ -48,30 +48,12 @@ stages:
         command: 'init'
         workingDirectory: '$(System.DefaultWorkingDirectory)/myenv'
         backendServiceAWS: 'Aws-Terraform-Eks-Connect'
-        backendAWSBucketName: 'octopusmsiinstaller'
+        backendAWSBucketName: 'eks-dashapp-bucket-001'
         backendAWSKey: 'Kub-dashApp001-dev.tfstate'
       env:
         AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
         AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
-    # - task: TerraformTaskV4@4
-    #   inputs:
-    #     provider: 'aws'
-    #     command: 'destroy'
-    #     environmentServiceNameAWS: 'Aws-Terraform-Eks-Connect'
-    #     workingDirectory: '$(System.DefaultWorkingDirectory)/myenv'
-    #     commandOptions: '-auto-approve'
-    # - task: TerraformTaskV4@4
-      # inputs:
-      #   provider: 'aws'
-      #   command: 'destroy'
-      #   workingDirectory: '$(System.DefaultWorkingDirectory)/myenv'
-      #   environmentServiceNameAWS: 'Aws-Terraform-Eks-Connect'
-      #   backendServiceAWS: 'Aws-Terraform-Eks-Connect'
-      #   backendAWSBucketName: 'octopusmsiinstaller'
-      #   backendAWSKey: 'Kub-dashApp-dev.tfstate'
-      # env:
-      #   AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
-      #   AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
+    
     - task: TerraformTaskV4@4
       inputs:
         provider: 'aws'
