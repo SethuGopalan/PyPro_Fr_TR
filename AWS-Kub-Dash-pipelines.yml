@@ -47,6 +47,7 @@ stages:
         provider: 'aws'
         command: 'init'
         workingDirectory: '$(System.DefaultWorkingDirectory)/myenv'
+        commandOptions: '-migrate-state'
         backendServiceAWS: 'Aws-Terraform-Eks-Connect'
         backendAWSBucketName: 'eks-dashapp-bucket-001'
         backendAWSKey: 'Kub-dashApp001-dev.tfstate'
