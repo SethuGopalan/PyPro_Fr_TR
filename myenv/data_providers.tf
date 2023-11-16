@@ -39,3 +39,10 @@ data "aws_subnets" "default_subnets" {
   }
 
 }
+data "template_file" "aws_auth_configmap" {
+  template = file("${path.module}/configmap.tpl")
+
+  vars = {
+    eks_dashapp_role_arn = aws_iam_role.eks_dashapp_role.arn
+  }
+}

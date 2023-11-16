@@ -114,6 +114,11 @@ resource "aws_iam_role_policy_attachment" "eks_dashapp_policy" {
   policy_arn = aws_iam_policy.eks_custom_cluster_access.arn
 }
 
+resource "local_file" "aws_auth_configmap" {
+  content  = data.template_file.aws_auth_configmap.rendered
+  filename = "${path.module}/aws-auth-configmap.yaml"
+}
+
 # resource "aws_s3_bucket" "dashapp_bucket" {
 #   bucket = "eks-dashapp-bucket-001"
 
