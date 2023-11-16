@@ -5,7 +5,7 @@ metadata:
   namespace: kube-system
 data:
   mapRoles: |
-    - rolearn: arn:aws:iam::<AWS_ACCOUNT_ID>:role/eks_dashapp_role
+    - rolearn: arn:aws:iam::<582921950567>:role/eks_dashapp_role
       username: eks_dashapp_role
       groups:
         - system:masters
