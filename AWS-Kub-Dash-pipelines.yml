@@ -8,27 +8,18 @@ trigger:
 
 
 stages:
-- stage: Build
-  displayName: Build image
+- stage: CreateEKS
+  displayName: CreateAwsEKS
   jobs:
-  - job: Build
-    displayName: Build
+  - job: DeployEKS
+    displayName: DeploayAWSEKS
 
 
     pool:
       vmImage: ubuntu-latest
 
     steps:
-    # - task: DockerInstaller@0
-    #   inputs:
-    #     dockerVersion: '17.09.0-ce'
-    # - task: Docker@2
-    #   inputs:
-    #     containerRegistry: '7797-docker-kuber'
-    #     repository: '7797/Hello-DashApp-Docker-Image'
-    #     command: 'buildAndPush'
-    #     Dockerfile: '**/Dockerfile'
-    #     tags: '$(tag)'
+    
     - task: TerraformCLI@2
       inputs:
         command: 'version'
@@ -46,40 +37,50 @@ stages:
       env:
         AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
         AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
+    # - task: TerraformTaskV4@4
+    #   inputs:
+    #     provider: 'aws'
+    #     command: 'destroy'
+    #     workingDirectory: '$(System.DefaultWorkingDirectory)/myenv'
+    #     environmentServiceNameAWS: 'Aws-Terraform-Eks-Connect'
+    
     - task: TerraformTaskV4@4
       inputs:
         provider: 'aws'
-        command: 'destroy'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/myenv'
+        command: 'validate'
+      env:
+        AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
+        AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
+    - task: TerraformTaskV4@4
+      inputs:
+        provider: 'aws'
+        command: 'plan'
         workingDirectory: '$(System.DefaultWorkingDirectory)/myenv'
         environmentServiceNameAWS: 'Aws-Terraform-Eks-Connect'
-    
-    # - task: TerraformTaskV4@4
-    #   inputs:
-    #     provider: 'aws'
-    #     workingDirectory: '$(System.DefaultWorkingDirectory)/myenv'
-    #     command: 'validate'
-    #   env:
-    #     AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
-    #     AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
-    # - task: TerraformTaskV4@4
-    #   inputs:
-    #     provider: 'aws'
-    #     command: 'plan'
-    #     workingDirectory: '$(System.DefaultWorkingDirectory)/myenv'
-    #     environmentServiceNameAWS: 'Aws-Terraform-Eks-Connect'
-    #   env:
-    #     AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
-    #     AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
+      env:
+        AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
+        AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
         
 
-    # - task: TerraformTaskV4@4
-    #   inputs:
-    #     provider: 'aws'
-    #     command: 'apply'
-    #     workingDirectory: '$(System.DefaultWorkingDirectory)/myenv'
-    #     environmentServiceNameAWS: 'Aws-Terraform-Eks-Connect'
-    #   env:
-    #     AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
-    #     AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
+    - task: TerraformTaskV4@4
+      inputs:
+        provider: 'aws'
+        command: 'apply'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/myenv'
+        environmentServiceNameAWS: 'Aws-Terraform-Eks-Connect'
+      env:
+        AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
+        AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
+- stage: ConfigureEKS
+  dependsOn: CreateEKS
+  condition: succeeded('CreateEKS')
+  jobs:
+  - job: UpdateAuthConfig
+    steps:
+    - script: |
+        kubectl apply -f aws-auth-configmap.yaml
+      displayName: 'Update AWS Auth ConfigMap'
+      condition: and(succeeded(), eq(variables['deployAwsAuthConfigMap'], 'true'))
 
 
