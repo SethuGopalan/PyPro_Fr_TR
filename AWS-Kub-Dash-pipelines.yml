@@ -5,15 +5,7 @@
 
 trigger:
 - master
-# variables:
-#   # tag: '$(Build.BuildId)'
-# # variables:
-# #   # Define your variables here, or use the UI to define them as secret variables.
-# #   # DO NOT put the actual values in your YAML file for secrets.
-# #   - name: AWS_ACCESS_KEY_ID
-# #     value: $(AWS_ACCESS_KEY_ID)
-# #   - name: AWS_SECRET_ACCESS_KEY
-# #     value: $(AWS_SECRET_ACCESS_KEY)
+
 
 stages:
 - stage: Build
@@ -47,40 +39,47 @@ stages:
         provider: 'aws'
         command: 'init'
         workingDirectory: '$(System.DefaultWorkingDirectory)/myenv'
+        commandOptions: '-migrate-state'
         backendServiceAWS: 'Aws-Terraform-Eks-Connect'
-        backendAWSBucketName: 'eks-dashapp-bucket-001'
+        backendAWSBucketName: 'octopusmsiinstaller'
         backendAWSKey: 'Kub-dashApp001-dev.tfstate'
       env:
         AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
         AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
-    
     - task: TerraformTaskV4@4
       inputs:
         provider: 'aws'
-        workingDirectory: '$(System.DefaultWorkingDirectory)/myenv'
-        command: 'validate'
-      env:
-        AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
-        AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
-    - task: TerraformTaskV4@4
-      inputs:
-        provider: 'aws'
-        command: 'plan'
+        command: 'destroy'
         workingDirectory: '$(System.DefaultWorkingDirectory)/myenv'
         environmentServiceNameAWS: 'Aws-Terraform-Eks-Connect'
-      env:
-        AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
-        AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
+    
+    # - task: TerraformTaskV4@4
+    #   inputs:
+    #     provider: 'aws'
+    #     workingDirectory: '$(System.DefaultWorkingDirectory)/myenv'
+    #     command: 'validate'
+    #   env:
+    #     AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
+    #     AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
+    # - task: TerraformTaskV4@4
+    #   inputs:
+    #     provider: 'aws'
+    #     command: 'plan'
+    #     workingDirectory: '$(System.DefaultWorkingDirectory)/myenv'
+    #     environmentServiceNameAWS: 'Aws-Terraform-Eks-Connect'
+    #   env:
+    #     AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
+    #     AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
         
 
-    - task: TerraformTaskV4@4
-      inputs:
-        provider: 'aws'
-        command: 'apply'
-        workingDirectory: '$(System.DefaultWorkingDirectory)/myenv'
-        environmentServiceNameAWS: 'Aws-Terraform-Eks-Connect'
-      env:
-        AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
-        AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
+    # - task: TerraformTaskV4@4
+    #   inputs:
+    #     provider: 'aws'
+    #     command: 'apply'
+    #     workingDirectory: '$(System.DefaultWorkingDirectory)/myenv'
+    #     environmentServiceNameAWS: 'Aws-Terraform-Eks-Connect'
+    #   env:
+    #     AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
+    #     AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
 
 
