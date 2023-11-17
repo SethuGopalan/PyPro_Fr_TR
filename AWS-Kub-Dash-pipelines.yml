@@ -6,6 +6,9 @@
 trigger:
   - master
 
+variables:
+  deployAwsAuthConfigMap: "true"
+
 stages:
   - stage: CreateEKS
     displayName: CreateAwsEKS
