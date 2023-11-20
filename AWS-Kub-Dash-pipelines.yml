@@ -37,56 +37,56 @@ stages:
             env:
               AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
               AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
-          # - task: TerraformTaskV4@4
-          #   inputs:
-          #     provider: "aws"
-          #     command: "destroy"
-          #     workingDirectory: "$(System.DefaultWorkingDirectory)/myenv"
-          #     environmentServiceNameAWS: "Aws-Terraform-Eks-Connect"
           - task: TerraformTaskV4@4
             inputs:
               provider: "aws"
-              workingDirectory: "$(System.DefaultWorkingDirectory)/myenv"
-              command: "validate"
-            env:
-              AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
-              AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
-          - task: TerraformTaskV4@4
-            inputs:
-              provider: "aws"
-              command: "plan"
+              command: "destroy"
               workingDirectory: "$(System.DefaultWorkingDirectory)/myenv"
               environmentServiceNameAWS: "Aws-Terraform-Eks-Connect"
-            env:
-              AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
-              AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
+  #         - task: TerraformTaskV4@4
+  #           inputs:
+  #             provider: "aws"
+  #             workingDirectory: "$(System.DefaultWorkingDirectory)/myenv"
+  #             command: "validate"
+  #           env:
+  #             AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
+  #             AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
+  #         - task: TerraformTaskV4@4
+  #           inputs:
+  #             provider: "aws"
+  #             command: "plan"
+  #             workingDirectory: "$(System.DefaultWorkingDirectory)/myenv"
+  #             environmentServiceNameAWS: "Aws-Terraform-Eks-Connect"
+  #           env:
+  #             AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
+  #             AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
 
-          - task: TerraformTaskV4@4
-            inputs:
-              provider: "aws"
-              command: "apply"
-              workingDirectory: "$(System.DefaultWorkingDirectory)/myenv"
-              environmentServiceNameAWS: "Aws-Terraform-Eks-Connect"
-            env:
-              AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
-              AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
-  - stage: ConfigureEKS
-    dependsOn: CreateEKS
-    condition: succeeded('CreateEKS')
-    jobs:
-      - job: UpdateAuthConfig
-        steps:
-          - script: aws eks update-kubeconfig --name my-eks-dashapp-cluster --region us-east-1
-            displayName: "Set kubectl context"
+  #         - task: TerraformTaskV4@4
+  #           inputs:
+  #             provider: "aws"
+  #             command: "apply"
+  #             workingDirectory: "$(System.DefaultWorkingDirectory)/myenv"
+  #             environmentServiceNameAWS: "Aws-Terraform-Eks-Connect"
+  #           env:
+  #             AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
+  #             AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
+  # - stage: ConfigureEKS
+  #   dependsOn: CreateEKS
+  #   condition: succeeded('CreateEKS')
+  #   jobs:
+  #     - job: UpdateAuthConfig
+  #       steps:
+  #         - script: aws eks update-kubeconfig --name my-eks-dashapp-cluster --region us-east-1
+  #           displayName: "Set kubectl context"
 
-          - script: cat ~/.kube/config
-            displayName: "Show kubeconfig file (Debug)"
+  #         - script: cat ~/.kube/config
+  #           displayName: "Show kubeconfig file (Debug)"
 
-          - script: |
-              kubectl config current-context
-            displayName: "Show current kubectl context"
+  #         - script: |
+  #             kubectl config current-context
+  #           displayName: "Show current kubectl context"
 
-          - script: |
-              kubectl apply -f aws-auth-configmap.yaml
-            displayName: "Update AWS Auth ConfigMap"
-            condition: and(succeeded(), eq(variables['deployAwsAuthConfigMap'], 'true'))
+  #         - script: |
+  #             kubectl apply -f aws-auth-configmap.yaml
+  #           displayName: "Update AWS Auth ConfigMap"
+  #           condition: and(succeeded(), eq(variables['deployAwsAuthConfigMap'], 'true'))
